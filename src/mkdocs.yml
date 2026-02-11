@@ -1,9 +1,9 @@
-site_name: Astra Editor Document
-site_url: https://docs.astra.top
+site_name: AstraEditor Document
+site_url: https://docs.astras.top
 repo_url: https://github.com/AstraEditor/scratch-gui
 repo_name: AstraEditor/scratch-gui
 
-site_description: Astra Editor Document
+site_description: AstraEditor Document
 
 nav:
   - 主页: index.md
@@ -130,7 +130,7 @@ copyright: >
   <a href="#__consent">修改cookie设置</a>
 
 extra:
-  homepage: https://cyberneko.cn/RadiumOS
+  homepage: https://editor.astras.top/document
   generator: false
   social:
     - icon: fontawesome/brands/github 
