@@ -1,11 +1,10 @@
 ---
-slug: /embedding
-hide_table_of_contents: true
+title: 嵌入
 ---
 
-# Embedding
+# 嵌入
 
-You can use TurboWarp to embed a Scratch project in your website using an `<iframe>`. For the best experience, use this template:
+您可以借助 TurboWarp 将 Scratch 作品嵌入到您的网站中，方法是使用 `<iframe>` 标签。为了获得最佳体验，可以使用以下模板：
 
 ```html
 <iframe src="https://turbowarp.org/414716080/embed" width="482" height="412" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="" style="color-scheme: auto"></iframe>

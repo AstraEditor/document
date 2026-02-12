@@ -59,6 +59,9 @@ nav:
     - 模组介绍: development/getting-started.md
     - 全局变量: development/globals.md
     - Scratch X & TurboWarp: development/scratchx.md
+  - 博客:
+    - blog/index.md
+    - blog/tags.md
 
 theme: 
   name: material
@@ -133,14 +136,11 @@ plugins:
       archive_date_format: MMMM yyyy
       archive_url_date_format: MMMM/dd/yyyy
       authors_profiles: true
-      pagination_per_page: 5
-      archive_pagination_per_page: 5
-      categories_pagination_per_page: 5
   - tags:
       tags_file: blog/tags.md
   - privacy
   - git-authors
-  
+
 extra_css:
   - style/style.css
 
