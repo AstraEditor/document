@@ -10,78 +10,81 @@ title: 嵌入
 <iframe src="https://turbowarp.org/414716080/embed" width="482" height="412" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="" style="color-scheme: auto"></iframe>
 ```
 
-You should change these attributes appropriately:
+您可以对这些属性进行需要的调整：
 
- - `src="https://turbowarp.org/414716080/embed"` contains the ID of the project you want to embed. You should change this. We're using 414716080 as an example, but you can replace that number with any other project ID. You can also include other URL paramters as listed below.
- - `width="482" height="412"` defines the size of the embed. The player will automatically resize to whatever you specify here, so you can change the numbers. The border around the stage takes two pixels of width and height, and the controls take an extra 50 pixels of height. Thus, to get a 480x360 stage, you would use 482 and 412.
- - Optionally, you may want to add `loading="lazy"` to the attributes which lets the browser wait to load the iframe until the user scrolls closer to it. This can improve performance if the embed is pretty far down the page and doesn't need to be loaded right away.
+ - `src="https://turbowarp.org/414716080/embed"` 中包含了您要嵌入的作品的 ID。您需要对其进行更改。这里的作品 ID 便是 414716080，但您可以将该数字替换为其他作品的 ID。您还可以按照以下列出的方式添加其他 URL 参数。
+ - `width="482" height="412"` 用于定义嵌入舞台的尺寸。播放器会自动根据您在此处指定的尺寸进行调整，因此您可以更改这些数字。舞台周围的边框宽高均为 2 个像素，而上方的控制栏则额外占用 50 个像素的高度。因此，要显示为 480x360 的舞台尺寸，应使用 482 和 412。
+ - 另外，您还可以在属性中添加 `loading="lazy"` ，这能让浏览器在用户滚动到该 iframe 附近时再进行加载（这就是懒加载）。如果嵌入内容位于页面底部较远的位置且无需立即加载，这样做可以提高性能，提升网页加载速度。
 
-The rest of the attributes should not be changed. Here's what they do if you were curious:
+其余的属性可以不用更改。下面就是它们的功能说明，如果您想知道的话：
 
- - `allowtransparency="true"` allows the embed to have a transparent background, so any color or images you have behind the embed can still be seen.
- - `frameborder="0"` removes an ugly border around the iframe.
- - `scrolling="no"` ensures that there won't be any unexpected scrollbars in the iframe.
- - `allowfullscreen=""` allows the fullscreen button to work. If this attribute is removed or if the device does not support fullscreen, the button will not show up.
- - `style="color-scheme: auto"` ensures that the embed's transparent background works if your page uses the dark color-scheme. This attribute doesn't let you control how the stuff inside the embed appears. It just fixes the transparency.
+ - `allowtransparency='true'` 选项使得嵌入的界面可以拥有透明背景，因此嵌入界面后面的任何颜色或图像仍能清晰可见。
+ - `frameborder="0"` 去除 iFrame 四周那个丑陋的边框。
+ - `scrolling="no"` 确保 iframe 中不会出现任何不该出现的滚动条。
+ - `allowfullscreen=""` 保证全屏按钮能够正常工作。如果删除了此属性，或者你的设备太垃圾，不支持全屏模式，那么该按钮将不会显示出来。
+ - `style="color-scheme: auto"` 确保当您的页面采用暗黑模式时，嵌入元素的透明背景能够正常显示。此属性无法让您控制嵌入内容内部的显示效果，它只是固定了透明度。
 
-Here's what that example embed looks like in action:
+以下是该示例嵌入的实际效果展示：
 
 <iframe src="https://turbowarp.org/414716080/embed" width="482" height="412" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="" style={{colorScheme: "auto"}}></iframe>
 
-## Unshared projects can't be embedded {#unshared-projects}
+## 未共享的作品无法嵌入 {#unshared-projects}
 
-Unshared projects [can not be shown in embeds](unshared-projects). Make sure the projects you embed are shared or use the [TurboWarp Packager](https://packager.turbowarp.org/) instead.
+[未共享的作品](unshared-projects.md)无法在嵌入中显示。请确保您要嵌入的作品是分享出去的，或者使用[TurboWarp 打包器](https://packager.turbowarp.org/)替代。
 
-## URL parameters {#url-parameters}
+## URL 参数 {#url-parameters}
 
-All [standard URL Parameters](url-parameters.md) are still available. You can use these to control usernames and other things.
+所有[标准 URL 参数](url-parameters.md)仍然可用。您可以利用这些参数来设置用户名及其他内容。
 
-There are also some special parameters only available in embeds:
+此外，这里有一些仅在嵌入模式下才可用的特殊参数：
 
-### Autoplay {#autoplay}
+### 自动播放 {#autoplay}
 
-Embeds support the `autoplay` parameter, which will automatically hit the green flag when the project loads. For example: https://turbowarp.org/15832807/embed?autoplay
+嵌入功能支持`autoplay`参数，当作品加载时，该参数会自动运行作品。例如：https://turbowarp.org/15832807/embed?autoplay
 
-Note that sound blocks may not work until the user interacts with the project (for example, by clicking). This is a restriction imposed by browsers. There is nothing TurboWarp can do to work around this.
+请注意，声音块可能在用户与作品进行交互（例如点击操作）之前无法正常工作。这是浏览器本身的限制。而 TurboWarp 无法解决这一问题，毕竟你不能让儿子打老子。
 
-### Settings button {#settings-button}
+### 设置按钮 {#settings-button}
 
-You can optionally enable a settings button in embeds with the `settings-button` parameter that opens a similar menu to the "Advanced settings" menu found in the website and editor. For example: https://turbowarp.org/15832807/embed?autoplay&settings-button
+您还可以通过使用`settings-butto`”参数在嵌入内容中显示一个设置按钮，这样就能打开一个与编辑器中“高级设置”菜单类似的界面。例如： https://turbowarp.org/15832807/embed?autoplay&settings-button
 
-### Fullscreen background color {#fullscreen-background}
+### 全屏背景色 {#fullscreen-background}
 
-Outside of fullscreen mode, the embed is transparent so you can style the parent element if you want to change the background color.
+在没有开启全屏模式时，嵌入部分是透明的，因此如果您想更改父元素的背景颜色，可以对其进行样式设置。
 
-In fullscreen mode, the embed will either use a white or an almost black color depending on whether the user's computer is configured to dark mode or not.
+在全屏模式下，嵌入界面会根据用户电脑是否开启暗黑模式而采用白色或近似黑色的背景色。
 
-To override this behavior, set the `fullscreen-background` parameter to a CSS color value like `black` or `rgb(50,90,100)`. For example: https://turbowarp.org/15832807/embed?fullscreen-background=yellow
+若要修改这个设置，请将`fullscreen-background`参数设置为一个 CSS 颜色值，例如`black`或`rgb(50，90，100)`，例如： https://turbowarp.org/15832807/embed?fullscreen-background=yellow
 
-You can also use hex colors if you escape the `#` with percent encoding: `%23abc123`.
+您还可以使用十六进制颜色代码，只需用百分号编码将`#`符号进行转义即可：`%23abc123`。
 
-### Addons {#addons}
+### 插件 {#addons}
 
-By default, embeds have no addons enabled. This can be overridden with the `addons` parameter, which is a comma separated list of addon IDs to enable. For example: https://turbowarp.org/15832807/embed?addons=pause,gamepad,mute-project
+By default, embeds have no addons enabled. This can be overridden with the `addons` parameter, which is a comma separated list of addon IDs to enable. For example:
+默认情况下，嵌入组件未启用任何附加插件。不过可以通过使用`addons`参数来更改这一设置，该参数是一个以逗号分隔的插件 ID 列表，用于启用相应的插件。例如： https://turbowarp.org/15832807/embed?addons=pause,gamepad,mute-project
 
-Useful addons and their IDs:
+有用的插件和它们的 ID：
 
- - "Pause button" is `pause`
- - "Muted project player mode" is `mute-project`
- - "Remove curved stage border" is `remove-curved-stage-border`
- - "File drag and drop" is `drag-drop`
- - "Gamepad support" is `gamepad`
- - "Reverse order of project controls" is `editor-buttons-reverse-order`
- - "Clone counter" is `clones`
+ - `pause`是"暂停按钮" 插件
+ - `mute-project`是"播放器禁音"插件
+ - `remove-curved-stage-border`是"移除弯曲的舞台边框"插件
+ - `drag-drop`是"文件拖拽"插件
+ - `gamepad`是"游戏手柄支持"插件
+ - `editor-buttons-reverse-order`是"项目控件反向顺序"插件
+ - `clones`是"克隆计数器"插件
 
-Other addons will have no effect on the embed.
+（使用 AstraEditor 可以查看所有插件的 ID）
 
-## Security considerations {#security}
+其他插件对嵌入内容不会产生任何影响。
 
-If you use user-supplied information to generate embed links, you should sanitize any arguments to make sure users can't supply arbitrary URL parameters as some can lead to unexpected behaviors.
+## 安全注意事项 {#security}
 
-## Need more control? {#packager}
+如果您使用用户提供的信息来生成嵌入链接，那么您需要对所有参数进行整理，以确保用户没有输入错误的 URL 参数，因为某些参数可能会导致以外发生。
 
-Use the [TurboWarp Packager](https://packager.turbowarp.org/) for more control over the loading screen, accent colors, controls, and more. You can also [embed the output of the packager](/packager/embedding) very easily.
+## 需要更多设置？ {#packager}
 
-## License {#license}
+使用[TurboWarp 打包器](https://packager.turbowarp.org/)可以更准确地控制加载界面、强调色、控制选项等。您还可以非常轻松地[嵌入打包后的文件](/packager/embedding.md){.data-perviwe}。
 
-TurboWarp is licensed under the [GPLv3.0](https://github.com/TurboWarp/scratch-gui/blob/develop/LICENSE). We believe that an `<iframe>` of a GPLv3.0 work doesn't create a derivative work under the GPLv3.0, rather it creates an "aggregate work" which is not subject to the same requirements as derivative works. However, we are not lawyers and this is not legal advice. Talk to a lawyer if this matters to you.
+## 协议 {#license}
+
+TurboWarp 的许可协议遵循 [GPLv3.0](https://github.com/TurboWarp/scratch-gui/blob/develop/LICENSE)。我们认为，一个基于 GPLv3.0 许可协议的作品的 `<iframe>` 并不会构成基于 GPLv3.0 的衍生作品，而是会形成一种“组合作品”，其并不需要遵循与衍生作品相同的条件。然而，我们不是专业的律师，开源协议也不是法律建议。如果您对此有疑问，请咨询律师，反正你不遵守协议我们也不能把你怎么样，最多挂到耻辱柱上。

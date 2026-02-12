@@ -24,7 +24,7 @@
     
     
       
-        <title>CORS问题 - AstraEditor Document</title>
+        <title>神秘的跨域资源共享(CORS)问题 - AstraEditor Document</title>
       
     
     
@@ -92,7 +92,7 @@
         
         
         
-        <link rel="stylesheet" href="../../assets/external/fonts.googleapis.com/css.49ea35f2">
+        <link rel="stylesheet" href="../../assets/external/fonts.googleapis.com/css.49ea35f2.css">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -125,7 +125,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cors-why-your-fetch-block-doesnt-work" class="md-skip">
+        <a href="#cors-fetch" class="md-skip">
           跳转至
         </a>
       
@@ -175,7 +175,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CORS问题
+              神秘的跨域资源共享(CORS)问题
             
           </span>
         </div>
@@ -870,7 +870,7 @@
         <li class="md-nav__item">
   <a href="#cors" class="md-nav__link">
     <span class="md-ellipsis">
-      What is CORS?
+      什么是 CORS ？
     </span>
   </a>
   
@@ -879,7 +879,7 @@
         <li class="md-nav__item">
   <a href="#workarounds" class="md-nav__link">
     <span class="md-ellipsis">
-      How to fix your blocks
+      怎么修复你的块？
     </span>
   </a>
   
@@ -888,7 +888,7 @@
         <li class="md-nav__item">
   <a href="#desktop" class="md-nav__link">
     <span class="md-ellipsis">
-      Desktop app
+      桌面应用
     </span>
   </a>
   
@@ -897,7 +897,7 @@
         <li class="md-nav__item">
   <a href="#packaged-projects" class="md-nav__link">
     <span class="md-ellipsis">
-      Packaged projects
+      打包好的作品
     </span>
   </a>
   
@@ -906,7 +906,7 @@
         <li class="md-nav__item">
   <a href="#servers" class="md-nav__link">
     <span class="md-ellipsis">
-      If you are running a server
+      如果你正在运行一个服务器
     </span>
   </a>
   
@@ -1250,7 +1250,7 @@
         <li class="md-nav__item">
   <a href="#cors" class="md-nav__link">
     <span class="md-ellipsis">
-      What is CORS?
+      什么是 CORS ？
     </span>
   </a>
   
@@ -1259,7 +1259,7 @@
         <li class="md-nav__item">
   <a href="#workarounds" class="md-nav__link">
     <span class="md-ellipsis">
-      How to fix your blocks
+      怎么修复你的块？
     </span>
   </a>
   
@@ -1268,7 +1268,7 @@
         <li class="md-nav__item">
   <a href="#desktop" class="md-nav__link">
     <span class="md-ellipsis">
-      Desktop app
+      桌面应用
     </span>
   </a>
   
@@ -1277,7 +1277,7 @@
         <li class="md-nav__item">
   <a href="#packaged-projects" class="md-nav__link">
     <span class="md-ellipsis">
-      Packaged projects
+      打包好的作品
     </span>
   </a>
   
@@ -1286,7 +1286,7 @@
         <li class="md-nav__item">
   <a href="#servers" class="md-nav__link">
     <span class="md-ellipsis">
-      If you are running a server
+      如果你正在运行一个服务器
     </span>
   </a>
   
@@ -1324,36 +1324,34 @@
   
 
 
-<h1 id="cors-why-your-fetch-block-doesnt-work">CORS: Why your fetch block doesn't work</h1>
-<p>Anyone who's used the Fetch, HTTP, Network and similar extensions has noticed that when you try to fetch certain websites, even after pressing "Allow", the block just doesn't work:</p>
+<h1 id="cors-fetch">CORS: 为啥你的 fetch 块不工作？</h1>
+<p>任何人在使用类似“Fetch”、“HTTP”、“网络”等扩展时都会被服务器发现，他们在尝试访问某些网站时，即便点击了“允许”，块也不起作用：</p>
 <p><img alt="" src="../assets/fetch-google.png" /></p>
-<p>The reason for this is called <strong>CORS</strong>, a security feature that limits how websites can interact.</p>
-<h2 id="cors">What is CORS?</h2>
-<p>It stands for Cross-Origin Resource Sharing, but we're not going to dive into the <a href="https://developer.mozilla.org/en-US/docs/Glossary/CORS">internal details</a> very much -- other places have already done that. The core problem that CORS solves is simple to understand:</p>
+<p>造成这种情况的原因被称为<strong>跨域资源共享</strong>（CORS），这是一种限制网站交互方式的安全功能。</p>
+<h2 id="cors">什么是 CORS ？</h2>
+<p>即<strong>跨源资源共享</strong>（Cross-Origin Resource Sharing），在这里我们不会深入探讨其<a href="https://developer.mozilla.org/en-US/docs/Glossary/CORS">内部细节</a>——有专门的文档对此进行了详细介绍。CORS 所解决的核心问题很容易理解：</p>
 <ul>
-<li>Some websites want to <strong>block</strong> access from other websites</li>
-<li>Other websites want to <strong>allow</strong> access from other websites</li>
+<li>有些网站希望<strong>阻止</strong>其他网站的访问</li>
+<li>而其他网站则希望<strong>允许</strong>其他网站进行访问</li>
 </ul>
-<p>Imagine if any website you visited could access your bank's website as though they were you. That would be quite bad! But sometimes this access is not a problem and actually intended. Parts of Scratch's API enable CORS, which is how TurboWarp loads projects from Scratch.</p>
-<p>CORS is the way that a website declares whether they want other websites to be able to access theirs. By default, access is not allowed. Websites have to <strong>opt in to CORS</strong> which lets other websites access them. If a website doesn't opt in, your browser will give TurboWarp a very generic "Network error".</p>
-<h2 id="workarounds">How to fix your blocks</h2>
-<p>It depends on what the URL is for.</p>
+<p>想象一下，如果你访问的任何网站都能像你本人一样访问你的银行网站，那太<s>几把</s>恐怖了！但有时这样的访问并非问题，甚至是有意为之。Scratch 的部分 API 支持跨域资源共享（CORS），这就是 TurboWarp 从 Scratch 加载在线作品的方式。</p>
+<p>CORS 是一种网站用于声明是否允许其他网站访问其内容的方式。默认情况下，访问是被禁止的。这个网站必须<strong>选择启用 CORS</strong>，这样其他网站才能访问它们。如果网站禁用了 CORS，您的浏览器将会给 TurboWarp 一个非常笼统的“网络错误”提示。</p>
+<h2 id="workarounds">怎么修复你的块？</h2>
+<p>它取决于 URL 的用途。</p>
 <ul>
-<li><strong>Switch to a different URL:</strong> If the URL is just being used to host static files, find another host that supports direct downloads and CORS. If one API doesn't support CORS, check if a competitor's API does.</li>
-<li><strong>Use a CORS proxy:</strong> Instead of asking your browser to access a website directly, you can ask another server (called a CORS proxy) to access that website on your behalf and then send back the response but allowing CORS. There are many public CORS proxies that you can find online, but they tend to be short lived as they are expensive to operate and heavily abused. CORS proxies can also spy on your project's web requests, as well as tamper with them. This can often be problematic. TurboWarp does not currently run its own CORS proxy.</li>
-<li><strong>Switch to TurboWarp Desktop:</strong> The desktop app has an option to bypass CORS. See below.</li>
+<li><strong>使用其他功能类似的 URL：</strong> 如果该 URL 仅用于托管静态文件，那么请寻找支持直接下载和跨域资源共享功能的其他主机。如果某个 API 不支持跨域资源共享功能，那就查看其竞争对手的 API 是否支持 CORS。</li>
+<li><strong>使用跨域资源共享代理：</strong> 与其让浏览器直接访问网站，您也可以让另一个服务器（称为 CORS 代理）代替您访问该网站，并返回允许 CORS 的响应。您可以在网上找到许多公开的 CORS 代理，但它们往往活不久，因为运营它们的成本很高，而且经常被滥用。CORS 代理还会监视您作品中的网络请求，并可能对其进行篡改，造成问题。注意，TurboWarp 目前并未运行自己的 CORS 代理。</li>
+<li><strong>使用 TurboWarp 桌面版：</strong> TW 的桌面应用程序有一个可选功能，能够绕过跨域资源共享（CORS）限制。详情如下：</li>
 </ul>
-<h2 id="desktop">Desktop app</h2>
-<p>In <a href="https://desktop.turbowarp.org/">TurboWarp Desktop</a>, there is an option to bypass CORS to allow access to any website. For security reasons it's disabled by default to match normal web browsers. Open up Desktop Settings under the Settings button in the top left (in older versions Desktop Settings is under the ? button in the top right instead):</p>
-<p>import settingsMenu from './assets/desktop-settings.png';</p>
-<p><img src={settingsMenu} height={596/2} width={632/2} /></p>
-
-<p>When the desktop settings window opens, check the box by "Allow extensions to access any website".</p>
-<h2 id="packaged-projects">Packaged projects</h2>
-<p>Packaged projects running in a browser are subject to the same limitations as any other website.</p>
-<p>Projects that are packaged to Electron apps bypass CORS by default, similar to the option in the desktop app.</p>
-<h2 id="servers">If you are running a server</h2>
-<p>If you want websites to be able to access your website, set the <code>Access-Control-Allow-Origin</code> header to <code>*</code> in each response you want to be public. If you search the name of the web server or framework you're using followed by "cors", you should find plenty of examples.</p>
+<h2 id="desktop">桌面应用</h2>
+<p>在<a href="https://desktop.turbowarp.org/">TurboWarp 桌面版</a>中，有一个选项可以绕过跨域资源共享（CORS）限制，从而允许访问任何网站。出于安全考虑，默认情况下该选项是禁用的，以爆炸与普通浏览器保持一致。在左上角的“设置”按钮下方打开“桌面设置”（在较旧版本中，桌面设置位于右上角的“？”按钮下方）：</p>
+<p><img alt="" src="../assets/desktop-settings.png" width="316px" /></p>
+<p>当桌面设置窗口打开时，请勾选“允许扩展访问任何网站”这一选项。</p>
+<h2 id="packaged-projects">打包好的作品</h2>
+<p>在浏览器中运行的打包作品与任何其他网站一样，都受到相同的限制。</p>
+<p>那些被打包成 Electron 应用程序的作品默认情况下<em>会绕过</em>跨域资源共享机制，这与桌面应用程序中的设置类似。</p>
+<h2 id="servers">如果你正在运行一个服务器</h2>
+<p>如果您希望其他网站能够访问您的网站，请在您希望公开的每个响应中设置“Access-Control-Allow-Origin”标头为“*”。如果您搜索您正在使用的网络服务器或框架的名称并加上“CORS”，应该能找到很多示例。</p>
 
 
 
@@ -1374,12 +1372,13 @@
   <span class="md-source-file__fact">
     <span class="md-icon" title="贡献者">
       
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
       
     </span>
     <nav>
       
-        <a href="mailto:3091949883@qq.com">Cyberexplorer</a>
+        <a href="mailto:3091949883@qq.com">Cyberexplorer</a>, 
+        <a href="mailto:not.committed.yet">Not Committed Yet</a>
     </nav>
   </span>
 

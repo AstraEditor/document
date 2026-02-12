@@ -47,7 +47,7 @@ TurboWarp 扩展列表中包含的所有扩展都将保持原有功能不变，�
 
 现在请查看下列代码以下这段代码，它会将 1 到 100 之间的整数相加。假设该代码块被设置为“运行时不刷新屏幕”且循环计时器已关闭。
 
-![Script that sums 1 to 100](./assets/sum-1-to-100.svg)
+![Script that sums 1 to 100](./assets/sum-1-to-100.png){width=173px}
 
 旧的编译器将会生成这样的代码：
 

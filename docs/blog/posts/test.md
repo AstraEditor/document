@@ -1,5 +1,8 @@
 ---
 date: 2026-02-12
+authors:
+    - cyberexplorer
+    - koshino
 ---
 
 # 测试文章

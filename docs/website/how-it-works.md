@@ -1,58 +1,24 @@
 ---
-slug: /how
-hide_table_of_contents: true
+title: 为啥 TW 内核这么快
 ---
 
-# How TurboWarp runs Scratch projects 10-100x faster
+# TurboWarp 是怎么使 Scratch 作品以原本的 10 ~ 100 倍的速度运行的？
 
-TurboWarp uses a *compiler* while Scratch uses an *interpreter*. This allows TurboWarp to run somewhere between 10-100x faster depending on the project, but it makes live script editing [impracticable](#live-script-editing).
+TurboWarp 在 Scratch 还在用**解释器**是时候抢先一步用上了**编译器**。这使得 TurboWarp 的运行速度能够根据作品情况在 10 到 100 倍之间波动，但这也使得[实时脚本编辑](#live-script-editing)失效。
 
-<table style={{textAlign: "center"}}>
-    <thead>
-        <tr>
-            <th>Test</th>
-            <th>Scratch</th>
-            <th>TurboWarp</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <div><a href="https://scratch.mit.edu/projects/310372816/">Quicksort</a></div>
-                <div>Sort 200000 random items</div>
-                <div>Lower is better</div>
-            </td>
-            <td>8.871 seconds</td>
-            <td>0.0451 seconds</td>
-        </tr>
-        <tr>
-            <td>
-                <div><a href="https://scratch.mit.edu/projects/412737809/">Cycles Raytracer</a></div>
-                <div>res=1 samp=10 dof=.08</div>
-                <div>Lower is better</div>
-            </td>
-            <td>814 seconds</td>
-            <td>15 seconds</td>
-        </tr>
-        <tr>
-            <td>
-                <div><a href="https://scratch.mit.edu/projects/611788242/">Faster SHA-256 Hash</a></div>
-                <div>Hashes per second</div>
-                <div>Higher is better</div>
-            </td>
-            <td>146 per second</td>
-            <td>3010 per second</td>
-        </tr>
-    </tbody>
-</table>
+|测试|Scratch|TurboWarp|
+|:-:|:-:|:-:|
+|[Quicksort](https://scratch.mit.edu/projects/320372816)<br>排序 200000 随机项<br>越短越好|8.871秒|0.0451秒|
+|[Cycles Raytracer](https://scratch.mit.edu/projects/412737809/)<br>RES=1 samp=10 dof=.08<br>越短越好|814秒|15秒|
+|[Faster SHA-256 Hash](https://scratch.mit.edu/projects/611788242/)<br>哈希频率<br>越高越好|146次/秒|3010次/秒|
 
-(Tested using Chromium 140, Arch Linux, i7 4790k)
+(使用 Chromium 140，Arch Linux，i7 4790k CPU测试)
 
-Consider the following script:
+请看下列代码
 
-![When green flag clicked, forever, move my variable steps](./assets/forever-move-my-variable-steps.svg)
+![当开始被点击，重复执行，移动"我的变量"步](./assets/forever-move-my-variable-steps.png)
 
-Scratch's interpreter walks an [abstract syntax tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree) at runtime. Internally that looks like this:
+Scratch 的解释器在运行时会遍历一个[抽象语法树](https://en.wikipedia.org/wiki/Abstract_syntax_tree)，它的内部实现看起来是这样的：
 
 ```json
 {
@@ -102,18 +68,18 @@ Scratch's interpreter walks an [abstract syntax tree](https://en.wikipedia.org/w
 }
 ```
 
-Whenever Scratch executes any block, it has to do a lot of things:
+每当 Scratch 执行任何一个代码块时，它都需要完成一大堆操作：
 
- - It has to look up the block using its ID and which function the block's opcode corresponds to.
- - If the block has inputs, those are also blocks, and must go through the same steps as any other block, and so must any deeper inputs.
- - It manually maintains a stack of blocks, loops, conditions, procedures, etc.
- - Scratch scripts can be yielded, so all of this has to happen in a way that can be paused and resumed later.
- - Scratch scripts can be changed while they're running, so caching everything ahead of time is difficult.
- - etc. There is a *lot* going on in Scratch whenever it executes even a single block.
+ - 它需要根据块的 ID 查找该块，并确定其操作码所对应的功能。
+ - 如果该代码块有输入框，那么这些输入框本身也是块，并且必须按照与其他任何模块相同的步骤进行处理，任何嵌套的输入框也是这样。
+ - 它会手动维护一个包含块、循环、条件、过程等元素的代码栈。
+ - Scratch 的脚本是可以被打断的，因此所有操作都必须支持暂停，并且能够在稍后继续执行。
+ - Scratch 的脚本在运行中可以修改，所以在运行前进行缓存是十分麻烦的，这几乎不可能。
+ - Scratch 在执行任何一个简单的块时，其内部都会发生***数不清***的事情。
 
-The interpreter overhead is added on top of the overhead of JavaScript itself. As this code involves many dynamic types, it can be hard for the JavaScript JIT to optimize it.
+解释器的算力开销是在 JavaScript 本身的开销之上叠加的。由于这段代码涉及多种动态类型，因此对于 JavaScript 的即时编译器来说，对其进行优化可能会比较困难。
 
-TurboWarp's compiler removes all of that overhead by converting scripts directly to JavaScript functions. For example, the above script becomes:
+TurboWarp 的编译器会消除这些不必要的开销，因为它会将脚本直接转换为 JavaScript 函数。例如，上述脚本会变成：
 
 ```js
 const myVariable = stage.variables["`jEk@4|i[#Fk?(8x)AV.-my variable"];
@@ -125,19 +91,19 @@ return function* () {
 };
 ```
 
-Things to notice:
+值得注意的是：
 
- - No more looking up block IDs or opcodes: it's just JavaScript.
- - No more looking up inputs manually: they're just JavaScript arguments.
- - No more manual state maintaining: it's just JavaScript.
- - As this is a single JavaScript function, we can't easily implement [live script editing](#live-script-editing)
- - If the JavaScript JIT notices that a certain variable is always a number, it can theoretically optimize accordingly.
- - This JavaScript looks very strange compared to typical human-written JavaScript and runs slower because we maintain compatibility with edge case Scratch behaviors.
- - We manually formatted the JavaScript and renamed some variables to make it more readable. The real code uses variable names like `b0` and has no formatting.
+ - 无需再查找积木 ID 或操作码了：它们都变成了 JavaScript！
+ - 无需再手动查找输入内容了：它们就是 JavaScript 函数的参数！
+ - 无需再进行手动状态维护：交给 JavaScript！
+ - 由于它变成了一个单独的 JavaScript 函数，所以我们难以实现[即使脚本编辑](#live-script-editing)。
+ - 如果 JavaScript 的即时编译器发现某个变量始终为数字类型，那么理论上它就可以对其进行相应的优化。
+ - 与我们编写的 JavaScript 代码相比，这段代码显得非常奇怪，而且运行速度也会慢一丢丢，这是因为我们需要保持与 Scratch 的特性兼容。
+ - 我们手动对 JavaScript 代码进行了格式化，并对一些变量进行了重命名，以使变成给人看的：而实际的代码使用的是像 `b0` 这样的变量名，而且几乎没有换行，乱的一批。
 
-Of course, this is a very simple script where the interpreter overhead is negligible, which is the case for most projects. It's only when you execute thousands of blocks per frame that the interpreter's overhead becomes significant.
+当然，这是一个非常简单的脚本，由于解释器产生的性能开销几乎可以忽略不计，在大多数作品中都是这样。只有当每帧执行数千个代码块时，解释器的性能开销才会变得明显。
 
-Here's a more complex example: a sorting algorithm - bubble sort.
+这里有一个更复杂的例子：一种排序算法——冒泡排序。
 
 ```js
 const length = stage.variables["O;aH~(njYNn}Bl@}!%pS-length-"];
@@ -147,22 +113,22 @@ const i = stage.variables["O;aH~(njYNn}Bl@}!%pS-i-"];
 const temp = stage.variables["O;aH~(njYNn}Bl@}!%pS-tmp-"];
 return function fun1_sort () {
   length.value = list.value.length;
-  // repeat until length = 0
+  // 重复执行直到 length = 0
   while (!compareEqual(length.value, 0)) {
     newLength.value = 0;
     i.value = 1;
-    // repeat length - 1 times
+    // 重复 length - 1 次
     for (var counter = ((+length.value || 0) - 1) || 0; counter >= 0.5; counter--) {
-      // change i by 1
+      // 将 i 增加 1
       i.value = ((+i.value || 0) + 1);
-      // if item i - 1 of list is greater than item i of list
+      // 如果列表第 i - 1 项大于第 i 项
       if (
         compareGreaterThan(
           list.value[((((i.value || 0) - 1) || 0) | 0) - 1] ?? "",
           list.value[((i.value || 0) | 0) - 1] ?? ""
         )
       ) {
-        // swap item i and i - 1 of list
+        // 交换列表中第 i 项和第 i - 1 项
         temp.value = listGet(list.value, i.value);
         listReplace(
           list,
@@ -182,7 +148,7 @@ return function fun1_sort () {
 };
 ```
 
-Functions such as `listGet`, `listReplace`, and `compareEqual` are part of the TurboWarp runtime and are implemented to match the strange behaviors of Scratch. The functions used by bubble sort are shown below, for your reference. Accuracy and performance are a higher priority than readability for these functions as they tend to be quite hot.
+诸如 `listGet`、`listReplace` 和 `compareEqual` 等函数属于 TurboWarp 运行时的一部分，并且其实现方式是为了与 Scratch 的特性相匹配。下面展示了冒泡排序所使用的函数供您参考，对于这些函数而言，准确性与性能比可读性更为重要，因为它们通常需要高效率。
 
 ```js
 const isNotActuallyZero = val => {
@@ -266,6 +232,6 @@ const listReplace = (list, idx, value) => {
 };
 ```
 
-### Live script editing {#live-script-editing}
+### 实时脚本编辑 {#live-script-editing}
 
-If you start a script using the compiler, you won't be able to move, remove, or add blocks and have the changes be reflected in real time as they would be in Scratch. The script has to be restarted for changes to apply. We believe there are some ways we could make this work, but they will hurt performance or add significant complexity. It's something we want to implement eventually, but not yet.
+如果使用编译器来启动脚本，那么在运行时移动、删除或添加代码块，都无法像 Scratch 那样实时看到更改的效果，只有重新启动脚本才能使更改生效。我们认为或许可以通过一些方法来实现这一功能，但这些方法可能会降低性能或者增加极大的复杂性。这是我们终极目标，但目前来看还实现不了。

@@ -1,51 +1,48 @@
 ---
-slug: /cors
-hide_table_of_contents: true
+title: 神秘的跨域资源共享(CORS)问题
 ---
 
-# CORS: Why your fetch block doesn't work
+# CORS: 为啥你的 fetch 块不工作？
 
-Anyone who's used the Fetch, HTTP, Network and similar extensions has noticed that when you try to fetch certain websites, even after pressing "Allow", the block just doesn't work:
+任何人在使用类似“Fetch”、“HTTP”、“网络”等扩展时都会被服务器发现，他们在尝试访问某些网站时，即便点击了“允许”，块也不起作用：
 
 ![](./assets/fetch-google.png)
 
-The reason for this is called **CORS**, a security feature that limits how websites can interact.
+造成这种情况的原因被称为**跨域资源共享**（CORS），这是一种限制网站交互方式的安全功能。
 
-## What is CORS? {#cors}
+## 什么是 CORS ？ {#cors}
 
-It stands for Cross-Origin Resource Sharing, but we're not going to dive into the [internal details](https://developer.mozilla.org/en-US/docs/Glossary/CORS) very much -- other places have already done that. The core problem that CORS solves is simple to understand:
+即**跨源资源共享**（Cross-Origin Resource Sharing），在这里我们不会深入探讨其[内部细节](https://developer.mozilla.org/en-US/docs/Glossary/CORS)——有专门的文档对此进行了详细介绍。CORS 所解决的核心问题很容易理解：
 
- - Some websites want to **block** access from other websites
- - Other websites want to **allow** access from other websites
+ - 有些网站希望**阻止**其他网站的访问
+ - 而其他网站则希望**允许**其他网站进行访问
 
-Imagine if any website you visited could access your bank's website as though they were you. That would be quite bad! But sometimes this access is not a problem and actually intended. Parts of Scratch's API enable CORS, which is how TurboWarp loads projects from Scratch.
+想象一下，如果你访问的任何网站都能像你本人一样访问你的银行网站，那太<s>几把</s>恐怖了！但有时这样的访问并非问题，甚至是有意为之。Scratch 的部分 API 支持跨域资源共享（CORS），这就是 TurboWarp 从 Scratch 加载在线作品的方式。
 
-CORS is the way that a website declares whether they want other websites to be able to access theirs. By default, access is not allowed. Websites have to **opt in to CORS** which lets other websites access them. If a website doesn't opt in, your browser will give TurboWarp a very generic "Network error".
+CORS 是一种网站用于声明是否允许其他网站访问其内容的方式。默认情况下，访问是被禁止的。这个网站必须**选择启用 CORS**，这样其他网站才能访问它们。如果网站禁用了 CORS，您的浏览器将会给 TurboWarp 一个非常笼统的“网络错误”提示。
 
-## How to fix your blocks {#workarounds}
+## 怎么修复你的块？ {#workarounds}
 
-It depends on what the URL is for.
+它取决于 URL 的用途。
 
- - **Switch to a different URL:** If the URL is just being used to host static files, find another host that supports direct downloads and CORS. If one API doesn't support CORS, check if a competitor's API does.
- - **Use a CORS proxy:** Instead of asking your browser to access a website directly, you can ask another server (called a CORS proxy) to access that website on your behalf and then send back the response but allowing CORS. There are many public CORS proxies that you can find online, but they tend to be short lived as they are expensive to operate and heavily abused. CORS proxies can also spy on your project's web requests, as well as tamper with them. This can often be problematic. TurboWarp does not currently run its own CORS proxy.
- - **Switch to TurboWarp Desktop:** The desktop app has an option to bypass CORS. See below.
+ - **使用其他功能类似的 URL：** 如果该 URL 仅用于托管静态文件，那么请寻找支持直接下载和跨域资源共享功能的其他主机。如果某个 API 不支持跨域资源共享功能，那就查看其竞争对手的 API 是否支持 CORS。
+ - **使用跨域资源共享代理：** 与其让浏览器直接访问网站，您也可以让另一个服务器（称为 CORS 代理）代替您访问该网站，并返回允许 CORS 的响应。您可以在网上找到许多公开的 CORS 代理，但它们往往活不久，因为运营它们的成本很高，而且经常被滥用。CORS 代理还会监视您作品中的网络请求，并可能对其进行篡改，造成问题。注意，TurboWarp 目前并未运行自己的 CORS 代理。
+ - **使用 TurboWarp 桌面版：** TW 的桌面应用程序有一个可选功能，能够绕过跨域资源共享（CORS）限制。详情如下：
 
-## Desktop app {#desktop}
+## 桌面应用 {#desktop}
 
-In [TurboWarp Desktop](https://desktop.turbowarp.org/), there is an option to bypass CORS to allow access to any website. For security reasons it's disabled by default to match normal web browsers. Open up Desktop Settings under the Settings button in the top left (in older versions Desktop Settings is under the ? button in the top right instead):
+在[TurboWarp 桌面版](https://desktop.turbowarp.org/)中，有一个选项可以绕过跨域资源共享（CORS）限制，从而允许访问任何网站。出于安全考虑，默认情况下该选项是禁用的，以爆炸与普通浏览器保持一致。在左上角的“设置”按钮下方打开“桌面设置”（在较旧版本中，桌面设置位于右上角的“？”按钮下方）：
 
-import settingsMenu from './assets/desktop-settings.png';
+![](./assets/desktop-settings.png){width=316px}
 
-<p><img src={settingsMenu} height={596/2} width={632/2} /></p>
+当桌面设置窗口打开时，请勾选“允许扩展访问任何网站”这一选项。
 
-When the desktop settings window opens, check the box by "Allow extensions to access any website".
+## 打包好的作品 {#packaged-projects}
 
-## Packaged projects {#packaged-projects}
+在浏览器中运行的打包作品与任何其他网站一样，都受到相同的限制。
 
-Packaged projects running in a browser are subject to the same limitations as any other website.
+那些被打包成 Electron 应用程序的作品默认情况下*会绕过*跨域资源共享机制，这与桌面应用程序中的设置类似。
 
-Projects that are packaged to Electron apps bypass CORS by default, similar to the option in the desktop app.
+## 如果你正在运行一个服务器 {#servers}
 
-## If you are running a server {#servers}
-
-If you want websites to be able to access your website, set the `Access-Control-Allow-Origin` header to `*` in each response you want to be public. If you search the name of the web server or framework you're using followed by "cors", you should find plenty of examples.
+如果您希望其他网站能够访问您的网站，请在您希望公开的每个响应中设置“Access-Control-Allow-Origin”标头为“*”。如果您搜索您正在使用的网络服务器或框架的名称并加上“CORS”，应该能找到很多示例。
