@@ -1,13 +1,11 @@
 ---
-slug: /packager/embedding
-hide_table_of_contents: true
-sidebar_label: Embedding
+title: 嵌入
 ---
 
-# 嵌入打包器
+# 嵌入
 
-!!! info "注意了"
-    这个页面是关于[TurboWarp 打包器](https://turbowarp.org/)的。如果你只想知道如何嵌入Scratch项目到网站，查看[另一个嵌入页面](/website/embedding/).
+!!! info "信息"
+    这个页面是关于[TurboWarp 打包器](https://turbowarp.org/)的。如果你只想知道如何嵌入Scratch作品到网站，查看[另一个嵌入页面](/website/embedding/).
 
 
 You can embed the output of the TurboWarp Packager into another website:

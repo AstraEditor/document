@@ -33,7 +33,7 @@ nav:
     - 为TW提供翻译: website/translate.md
     - URL参数: website/url-parameters.md
     - Scratch账户&该编辑器: website/scratch-accounts.md
-    - 捐款: website/donate.md
+    - 赞助: website/donate.md
   - 打包:
     - packager/index.md
     - 嵌入: packager/embedding.md
